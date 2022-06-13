@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<!-- saved from url=(0124)https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Calculer un total[Résolu] - Laravel France</title>
+    <link href="./Calculer un total[Résolu] - Laravel France_files/app.css" rel="stylesheet">
+
+</head>
+<body id="app">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="https://laravel.fr/">Laravel France</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="https://laravel.fr/">Forums</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://laravel.fr/slack"><i class="fa fa-slack"></i> Slack</a>
+            </li>
+                        <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#" id="login_dd" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Se connecter
+                </a>
+                <div class="dropdown-menu" aria-labelledby="login_dd">
+                    <a class="dropdown-item" href="https://laravel.fr/oauth/google">Google</a>
+                    <a class="dropdown-item" href="https://laravel.fr/oauth/github">Github</a>
+                    <a class="dropdown-item" href="https://laravel.fr/oauth/twitter">Twitter</a>
+                </div>
+            </li>
+                    </ul>
+    </div>
+</nav>
+
+<main role="main">
+        <div class="category-banner" style="background-color: #FFB61E; color: #FFF">
+        <div class="container">
+            <a href="https://laravel.fr/c/laravel-4">
+                <span class="badge" style="border: 1px solid #FFF; color: #FFF">
+    Laravel 4
+</span>
+            </a>
+
+            <h2 class="topic-title ">
+                Calculer un total[Résolu]
+            </h2>
+
+                    </div>
+    </div>
+
+
+    <div class="container">
+        <div class="message-list mt-5">
+                            <a name="message-2610" id="message-2610"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/d72724dab198020c37ef34bd725c862c.jpg" alt="Avatar de thibs" data-toggle="tooltip" data-placement="top" title="" data-original-title="thibs">
+                    </div>
+                    <div>thibs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Bonjour,</p>
+<p>j'ai commencé à faire un site marchand pour un projet, et pour mon panier je récupère bien toutes les infos, mais j'ai du mal à calculer le prix total des articles.</p>
+<pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>
+ $panier = DB::table(<span class="hljs-string">'panier'</span>)-&gt;leftJoin(<span class="hljs-string">'item'</span>,<span class="hljs-string">'panier.id_item'</span>,<span class="hljs-string">'='</span>,<span class="hljs-string">'item.id'</span>)-&gt;where(<span class="hljs-string">'panier.id_user'</span>,Auth::user()-&gt;id)-&gt;get();
+ $total = DB::table(<span class="hljs-string">'panier'</span>)-&gt;leftJoin(<span class="hljs-string">'item'</span>,<span class="hljs-string">'panier.id_item'</span>,<span class="hljs-string">'='</span>,<span class="hljs-string">'item.id'</span>)-&gt;where(<span class="hljs-string">'panier.id_user'</span>,Auth::user()-&gt;id)-&gt;select(<span class="hljs-string">'price'</span>)-&gt;count();
+ <span class="hljs-keyword">foreach</span>($panier <span class="hljs-keyword">as</span> $p){
+ $price = $p-&gt;price * $p-&gt;quantite;
+ <span class="hljs-keyword">echo</span> HTML::image(<span class="hljs-string">'../public/images/'</span>.$p-&gt;file, <span class="hljs-string">'picture'</span>).<span class="hljs-string">"&lt;span class='article'&gt;"</span>.$p-&gt;title.<span class="hljs-string">"&lt;/span&gt;"</span>.<span class="hljs-string">"&lt;span class='qt'&gt;"</span>.$p-&gt;quantite.form::open(<span class="hljs-keyword">array</span>(<span class="hljs-string">'url'</span>=&gt;<span class="hljs-string">'uploadpanier/'</span>.$p-&gt;id));
+ <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;select name='qt'&gt;"</span>;
+ $i = <span class="hljs-number">0</span>;
+ <span class="hljs-keyword">while</span>($i &lt; <span class="hljs-number">100</span>){
+ <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;option value="'</span>.$i.<span class="hljs-string">'"&gt;'</span>.$i++.<span class="hljs-string">'&lt;/option&gt;'</span>;
+ }
+ <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;/select&gt;&lt;input type='submit' value='ok'&gt;"</span>.form::close().<span class="hljs-string">"&lt;/span&gt;"</span>.$price.<span class="hljs-string">"&lt;span class='date'&gt;"</span>.$p-&gt;date.html_entity_decode( HTML::link(<span class="hljs-string">'/deletepanier/'</span>.$p-&gt;id, HTML::image(<span class="hljs-string">"images/delete.png"</span>, <span class="hljs-string">"delete"</span>,<span class="hljs-keyword">array</span>(<span class="hljs-string">'class'</span>=&gt;<span class="hljs-string">'deletepanier'</span>)))).<span class="hljs-string">"&lt;/span&gt;&lt;hr&gt;"</span>;
+ }
+ var_dump($total);
+ <span class="hljs-meta">?&gt;</span>
+</code></pre>
+<p>Ici j'affiche donc toutes les infos relatives aux produits, $price calcule le prix en fonction de la quantité.<br>
+Et j'essaie de récupérer le total de tout ça avec $total, je sélectionne le prix, et je le count, le soucis et que ça me marque le nombre de produits ayant un prix, et pas le total des prix.<br>
+Donc si quelqu'un peut me mettre sur la voie ... merci d'avance.</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2610">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2611" id="message-2611"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/bf4114e6d1c5e38f94510399d16cf5e9.png" alt="Avatar de bestmomo" data-toggle="tooltip" data-placement="top" title="" data-original-title="bestmomo">
+                    </div>
+                    <div>bestmomo</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Salut,</p>
+<p>C'est pas très clair ce que tu fais, d'abord tu mets dans $total le nombre de tes prix et après tu ne t'en sers pas. J'aurais tendance à dire qu'il suffit d'ajouter à chaque boucle le $price calculé à $total au départ vide, mais je n'ai peut-être pas tout compris <img src="http://forums.laravel.fr/js/sceditor/emoticons/ermm.png" alt=":ermm:">.</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2611">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2612" id="message-2612"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/d72724dab198020c37ef34bd725c862c.jpg" alt="Avatar de thibs" data-toggle="tooltip" data-placement="top" title="" data-original-title="thibs">
+                    </div>
+                    <div>thibs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Je ne me sers pas de total car il ne marche pas comme je le souhaitais ^^.<br>
+Donc j'ai réussi pour trouver la somme totale je devais juste utiliser sum :</p>
+<pre><code class="hljs php">$total = DB::table(<span class="hljs-string">'panier'</span>)-&gt;leftJoin(<span class="hljs-string">'item'</span>,<span class="hljs-string">'panier.id_item'</span>,<span class="hljs-string">'='</span>,<span class="hljs-string">'item.id'</span>)-&gt;where(<span class="hljs-string">'panier.id_user'</span>,Auth::user()-&gt;id)-&gt;sum(<span class="hljs-string">'price'</span>);
+</code></pre>
+<p>Par contre ça me prend le prix à l'unité, si j'ai un article à 10 et l'autre à 20, j'aurais toujours 30, même si les articles sont en plusieurs quantités.</p>
+<p>Je pensais créer une autre variable qui serait = à &nbsp;$total + à la quantité mais le soucis est que cela me prend la quantité de tous les articles et non pas "cible".<br>
+Si quelqu'un à une idée de comment procéder.</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2612">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2613" id="message-2613"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/bf4114e6d1c5e38f94510399d16cf5e9.png" alt="Avatar de bestmomo" data-toggle="tooltip" data-placement="top" title="" data-original-title="bestmomo">
+                    </div>
+                    <div>bestmomo</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Un truc comme ça :</p>
+<pre><code class="hljs php">$total = DB::table(<span class="hljs-string">'panier'</span>)
+-&gt;leftJoin(<span class="hljs-string">'item'</span>,<span class="hljs-string">'panier.id_item'</span>,<span class="hljs-string">'='</span>,<span class="hljs-string">'item.id'</span>)
+-&gt;where(<span class="hljs-string">'panier.id_user'</span>,Auth::user()-&gt;id)
+-&gt;select(DB::raw(<span class="hljs-string">'sum(price * quantite) as total'</span>))
+-&gt;sum(<span class="hljs-string">'total'</span>);
+</code></pre>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2613">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2614" id="message-2614"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/d72724dab198020c37ef34bd725c862c.jpg" alt="Avatar de thibs" data-toggle="tooltip" data-placement="top" title="" data-original-title="thibs">
+                    </div>
+                    <div>thibs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Merci, petit soucis dans sum on est obligé de mettre quelque chose de la bdd, donc 'total' ne marche pas.<br>
+J'ai donc essayé</p>
+<pre><code class="hljs php">			$total = DB::table(<span class="hljs-string">'panier'</span>)-&gt;leftJoin(<span class="hljs-string">'item'</span>,<span class="hljs-string">'panier.id_item'</span>,<span class="hljs-string">'='</span>,<span class="hljs-string">'item.id'</span>)-&gt;where(<span class="hljs-string">'panier.id_user'</span>,Auth::user()-&gt;id)-&gt;select(DB::raw(<span class="hljs-string">'sum(price * quantite)'</span>));
+</code></pre>
+<p>mais la j'ai une erreur comme quoi ça ne peut pas être convertit en string</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2614">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2615" id="message-2615"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/f163a19b202f2cd7aef8e2d37510e5a6.png" alt="Avatar de nhairic" data-toggle="tooltip" data-placement="top" title="" data-original-title="nhairic">
+                    </div>
+                    <div>nhairic</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Le calcul de total est toujours complexe, et dépend souvent du métier.<br>
+Donc soit tu le fais &nbsp;en php(la majorité des cas) du genre :<br>
+Ta boucle<br>
+$priceTotal = 0;</p>
+<pre><code class="hljs php"><span class="hljs-keyword">foreach</span>($panier <span class="hljs-keyword">as</span> $p){
+$price = $p-&gt;price * $p-&gt;quantite;
+$priceTotal = $priceTotal + $price;
+}
+<span class="hljs-keyword">echo</span> $priceTotal;
+</code></pre>
+<p>Note : Enlève moi ces requêtes du template d'affichage !!! le controller (ou ta closure) est là pour faire çà</p>
+<p>As tu essayer de diviser ta requête<br>
+Un requête récupère les produits puis une autre requête calcule le total (en utilisant le résultat de la première requête). j'ai pas d'exemple probant a te donner , ça dépend beaucoup de la conception de ta base.</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2615">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2616" id="message-2616"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/bf4114e6d1c5e38f94510399d16cf5e9.png" alt="Avatar de bestmomo" data-toggle="tooltip" data-placement="top" title="" data-original-title="bestmomo">
+                    </div>
+                    <div>bestmomo</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Petite correction de ma requête (j'avais mis deux sum <img src="http://forums.laravel.fr/js/sceditor/emoticons/cwy.png" alt=":&#39;(">) :</p>
+<pre><code class="hljs php">$panier = DB::table(<span class="hljs-string">'panier'</span>)
+-&gt;leftJoin(<span class="hljs-string">'item'</span>,<span class="hljs-string">'panier.id_item'</span>,<span class="hljs-string">'='</span>,<span class="hljs-string">'item.id'</span>)
+-&gt;where(<span class="hljs-string">'panier.id_user'</span>,Auth::user()-&gt;id)
+-&gt;select(DB::raw(<span class="hljs-string">'sum(price * quantite) as total'</span>))
+-&gt;first();
+</code></pre>
+<p>On peut alors récupérer le total :</p>
+<pre><code class="hljs php">$panier-&gt;total
+</code></pre>
+<p>La requête devrait pouvoir se simplifier ainsi :</p>
+<pre><code class="hljs php">$total = DB::table(<span class="hljs-string">'panier'</span>)
+-&gt;leftJoin(<span class="hljs-string">'item'</span>,<span class="hljs-string">'panier.id_item'</span>,<span class="hljs-string">'='</span>,<span class="hljs-string">'item.id'</span>)
+-&gt;where(<span class="hljs-string">'panier.id_user'</span>,Auth::user()-&gt;id)
+-&gt;sum(DB::raw(<span class="hljs-string">'price * quantite'</span>);
+</code></pre>
+<p>Et tu as directement le total mais bon je n'ai pas testé...</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2616">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2617" id="message-2617"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/d72724dab198020c37ef34bd725c862c.jpg" alt="Avatar de thibs" data-toggle="tooltip" data-placement="top" title="" data-original-title="thibs">
+                    </div>
+                    <div>thibs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Merci mais je ne comprend pas pour priceTotal, si celui-ci est égal à 0, ça me renvoi donc juste $price, et donc ce n'est pas bon.</p>
+<p>Après oui je vais essayé d'organiser un peu mieux mon code ^^ la j'essaie d'abord que tout fonctionne correctement.</p>
+<p>Aussi je pensais récupérer dans la table panier le changement de quantité, mais cela oblige à rajouter "price" dans ma table panier et je trouve ca pas top comme manière. Mais bon même en voulant faire comme ceci, lors de l'update, je ne vois pas comment récupérer la quantité changé : $price, dans mon controller, une idée ?</p>
+<p>J'espère être assez clair quand je m'explique je m'embrouille un peu.</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2617">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2618" id="message-2618"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/d72724dab198020c37ef34bd725c862c.jpg" alt="Avatar de thibs" data-toggle="tooltip" data-placement="top" title="" data-original-title="thibs">
+                    </div>
+                    <div>thibs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Oui bestmomo j'avais aussi essayé comme ceci, le soucis est que j'ai une erreur : ne peut pas être converti en string</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2618">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2619" id="message-2619"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/bf4114e6d1c5e38f94510399d16cf5e9.png" alt="Avatar de bestmomo" data-toggle="tooltip" data-placement="top" title="" data-original-title="bestmomo">
+                    </div>
+                    <div>bestmomo</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <blockquote>
+<p>thib s :Oui bestmomo j'avais aussi essayé comme ceci, le soucis est que j'ai une erreur : ne peut pas être converti en string</p>
+</blockquote>
+<p>Tu peux préciser l'erreur ? <img src="http://forums.laravel.fr/js/sceditor/emoticons/ermm.png" alt=":ermm:"></p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2619">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2620" id="message-2620"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/d72724dab198020c37ef34bd725c862c.jpg" alt="Avatar de thibs" data-toggle="tooltip" data-placement="top" title="" data-original-title="thibs">
+                    </div>
+                    <div>thibs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Bien sur la voici : Object of class stdClass could not be converted to string (View: C:\wamp\www\projet_web_avance_e-commerce\app\views\panier.blade.php)</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2620">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2621" id="message-2621"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/bf4114e6d1c5e38f94510399d16cf5e9.png" alt="Avatar de bestmomo" data-toggle="tooltip" data-placement="top" title="" data-original-title="bestmomo">
+                    </div>
+                    <div>bestmomo</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Je viens de tester ma requête sur une table bricolée rapidement et je ne reçois pas cette erreur. <img src="http://forums.laravel.fr/js/sceditor/emoticons/shocked.png" alt=":O"></p>
+<p>Apparemment tu ne retournes pas une collection mais un objet...</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2621">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2622" id="message-2622"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/d72724dab198020c37ef34bd725c862c.jpg" alt="Avatar de thibs" data-toggle="tooltip" data-placement="top" title="" data-original-title="thibs">
+                    </div>
+                    <div>thibs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>ah mince, comment puis-je remédier à ça ?</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2622">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2623" id="message-2623"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/bf4114e6d1c5e38f94510399d16cf5e9.png" alt="Avatar de bestmomo" data-toggle="tooltip" data-placement="top" title="" data-original-title="bestmomo">
+                    </div>
+                    <div>bestmomo</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Si tu termines une requête avec un get(), un first() ou un truc de ce genre tu devrais avoir une collection, sinon tu as un objet Eloquent.</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2623">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2624" id="message-2624"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/d72724dab198020c37ef34bd725c862c.jpg" alt="Avatar de thibs" data-toggle="tooltip" data-placement="top" title="" data-original-title="thibs">
+                    </div>
+                    <div>thibs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Problème résolu, ça fonctionne correctement merci beaucoup !<br>
+Je m'étais juste fail lors de &nbsp;"echo $total-&gt;total;"</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2624">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2625" id="message-2625"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/bf4114e6d1c5e38f94510399d16cf5e9.png" alt="Avatar de bestmomo" data-toggle="tooltip" data-placement="top" title="" data-original-title="bestmomo">
+                    </div>
+                    <div>bestmomo</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Prends plutôt la deuxième version de la requête, elle est plus élégante et logique et tu as directement la valeur.</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2625">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2626" id="message-2626"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/f163a19b202f2cd7aef8e2d37510e5a6.png" alt="Avatar de nhairic" data-toggle="tooltip" data-placement="top" title="" data-original-title="nhairic">
+                    </div>
+                    <div>nhairic</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>à chaque itération je rajoute le price, donc le total est bon <img src="http://forums.laravel.fr/js/sceditor/emoticons/wink.png" alt=";)">; price est défini avant la boucle à 0. j'avais mal placé ma balise bbc code.<br>
+Price total</p>
+<pre><code class="hljs php">$priceTotal = <span class="hljs-number">0</span>;
+
+<span class="hljs-keyword">foreach</span>($panier <span class="hljs-keyword">as</span> $p){
+$price = $p-&gt;price * $p-&gt;quantite;
+$priceTotal = $priceTotal + $price;
+}
+<span class="hljs-keyword">echo</span> $priceTotal;
+</code></pre>
+<p>Mais vraiment si tu peux enlever les requêtes du template <img src="http://forums.laravel.fr/js/sceditor/emoticons/wink.png" alt=";)">, ça ferait plus sérieux à mon avis.<br>
+passe tes variables au template</p>
+<p>De tête<br>
+View::make([viewname])-&gt;withTotal($total)-&gt;withPanier($panier);<br>
+ou<br>
+View::make([viewname], array('total'=&gt; $total, 'panier'=&gt;$panier));</p>
+<p>ou tu peux te faire un helper <img src="http://forums.laravel.fr/js/sceditor/emoticons/wink.png" alt=";)">. pourquoi un service (voir ce que les autres en pensent)</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2626">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2627" id="message-2627"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/5ed51887259d4c90e4ceb2dc4568084c.png" alt="Avatar de JulienTant" data-toggle="tooltip" data-placement="top" title="" data-original-title="JulienTant">
+                    </div>
+                    <div>JulienTant</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Pas besoin de service, tu peux créer une méthode dans ton panier qui te donne cette info ;-)</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2627">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2630" id="message-2630"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/d72724dab198020c37ef34bd725c862c.jpg" alt="Avatar de thibs" data-toggle="tooltip" data-placement="top" title="" data-original-title="thibs">
+                    </div>
+                    <div>thibs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>Encore merci pour vos réponses ça m'a beaucoup aidé à comprendre !</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2630">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                            <a name="message-2634" id="message-2634"></a>
+    <div class="message ">
+        <div class="row">
+            <div class="d-none d-md-block col-md-2">
+                <div class="m-auto avatar p-1">
+                    <div>
+                    <img src="./Calculer un total[Résolu] - Laravel France_files/f163a19b202f2cd7aef8e2d37510e5a6.png" alt="Avatar de nhairic" data-toggle="tooltip" data-placement="top" title="" data-original-title="nhairic">
+                    </div>
+                    <div>nhairic</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 message-content">
+                <p>heu yep tu as raison julien. En fait(dans ma tête) je me disais que le panier aurait put être un service, mais ce n'est peut être pas probant <img src="http://forums.laravel.fr/js/sceditor/emoticons/wink.png" alt=";)">.</p>
+            </div>
+        </div>
+        <div class="row meta">
+            <div class="offset-2 col-10 meta-content">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fa fa-clock-o"></i> Posté <a href="https://laravel.fr/t/laravel-4/calculer-un-total-resolu?fbclid=IwAR1axmPwA_tXYRpcO7BxCOCFfa9STkbn57zclnScjuvmAc6hbJU_-VTseSs#message-2634">il y a 7 ans</a>
+                    </div>
+                                        <div class="col-auto ml-auto">
+                        <div class="pr-2">
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+                    </div>
+
+        
+                    <p>Vous ne pouvez pas répondre à ce sujet.</p>
+            </div>
+</main>
+
+<footer class="bg-dark mt-3 text-center text-white">
+
+    <p>
+        Développement &amp; maintenance : <a href="http://craftyx.fr/">Craftyx</a>
+    </p>
+
+    <p>
+        Rejoignez nous sur :
+        <a href="https://github.com/JulienTant/laravel-france" title="Github"><i class="fa fa-github-alt"></i> Github</a> |
+        <a href="https://laravel.fr/slack" title="Slack"><i class="fa fa-slack"></i> Slack</a>
+    </p>
+</footer>
+<script async="" src="./Calculer un total[Résolu] - Laravel France_files/analytics.js.téléchargement"></script><script src="./Calculer un total[Résolu] - Laravel France_files/app.js.téléchargement"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37182814-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+</body></html>
